@@ -10,16 +10,31 @@ RGCGT: A high-order feature learning framework for predicting disease-metabolite
 - conda=24.4.0
 - Python == 3.12
 - pytorch == 2.3.0+cu121
-- torch_geometric==2.5.3
-- torch_sparse=0.6.18
+- torch_geometric == 2.5.3
+- torch_sparse == 0.6.18
 - numpy == 1.26.4
 - pandas == 2.2.2
-- scikit-learn==1.5.0
-- scipy==1.13.1
-- matplotlib==3.9.0
+- scikit-learn == 1.5.0
+- scipy == 1.13.1
+- matplotlib == 3.9.0
+- GPU == RTX 2080 Ti(11GB) * 1
+- CPU == 12 vCPU Intel(R) Xeon(R) Platinum 8255C CPU @ 2.50GHz
 ```
 
 ## 🗓️ Dataset
+###  Dataset1 
+```
+- disease-metabolite associations: association_DME.xlsx
+- disease-microbe associations: association_DMI.xlsx
+- microbe-metabolite associations: association_MIME.xlsx
+- disease semantic networks based on metapath DMED and DMID: A_DME_D.xlsx and A_DMI_D.xlsx
+- metabolite semantic networks based on metapath MEDME and MEMIME: A_DME_ME.xlsx and A_MIME_ME.xlsx 
+- disease Gaussian kernel similarity: disease_Gaussian_Simi.xlsx
+- disease semantic similarity: disease_Semantic_simi.xlsx
+- metabolite functional similarity: metabolite_func_simi.xlsx
+- metabolite Gaussian kernel similarity: metabolite_Gaussian_Simi.xlsx
+- microbe Gaussian kernel similarities: microbe_Gaussian_Simi_1.xlsx and microbe_Gaussian_Simi_2.xlsx 
+```
 ```
 - disease-metabolite associations: association_DME.xlsx
 - disease-microbe associations: association_DMI.xlsx
