@@ -1,7 +1,5 @@
 # GRCGT_LWZ
 RGCGT: A high-order feature learning framework for predicting disease-metabolite interaction using residual graph convolution and graph transformer
-# MAHN
-Predicting disease-metabolite associations based on the metapath aggregation of tripartite heterogeneous networks
 
 ## 🏠 Overview
 ![flow chart](https://github.com/LUTGraphGroup/GRCGT_LWZ/assets/109469869/03b68056-4f73-43f7-a063-c5088a279750)
