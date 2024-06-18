@@ -22,30 +22,23 @@ RGCGT: A high-order feature learning framework for predicting disease-metabolite
 ```
 
 ## 🗓️ Dataset
-###  Dataset1 
+###  Dataset 1: 265 diseases, 2315 metabolites, and 4763 known associations 
 ```
-- disease-metabolite associations: association_DME.xlsx
-- disease-microbe associations: association_DMI.xlsx
-- microbe-metabolite associations: association_MIME.xlsx
-- disease semantic networks based on metapath DMED and DMID: A_DME_D.xlsx and A_DMI_D.xlsx
-- metabolite semantic networks based on metapath MEDME and MEMIME: A_DME_ME.xlsx and A_MIME_ME.xlsx 
-- disease Gaussian kernel similarity: disease_Gaussian_Simi.xlsx
-- disease semantic similarity: disease_Semantic_simi.xlsx
-- metabolite functional similarity: metabolite_func_simi.xlsx
-- metabolite Gaussian kernel similarity: metabolite_Gaussian_Simi.xlsx
-- microbe Gaussian kernel similarities: microbe_Gaussian_Simi_1.xlsx and microbe_Gaussian_Simi_2.xlsx 
+- disease-metabolite details: disease-metabolite.xlsx
+- disease-metabolite associations: association_matrix.csv
+- disease similarity matirix: diease_simi_network.csv
+- metabolite similarity matirix: metabolite_simi_ntework.csv
+- disease initial feature: MeSHHeading2vec.csv
+- metabolite initial feature: metabolite_mol2vec.csv
 ```
+###  Dataset 2: 126 diseases, 1405 metabolites, and 2555 known associations 
 ```
-- disease-metabolite associations: association_DME.xlsx
-- disease-microbe associations: association_DMI.xlsx
-- microbe-metabolite associations: association_MIME.xlsx
-- disease semantic networks based on metapath DMED and DMID: A_DME_D.xlsx and A_DMI_D.xlsx
-- metabolite semantic networks based on metapath MEDME and MEMIME: A_DME_ME.xlsx and A_MIME_ME.xlsx 
-- disease Gaussian kernel similarity: disease_Gaussian_Simi.xlsx
-- disease semantic similarity: disease_Semantic_simi.xlsx
-- metabolite functional similarity: metabolite_func_simi.xlsx
-- metabolite Gaussian kernel similarity: metabolite_Gaussian_Simi.xlsx
-- microbe Gaussian kernel similarities: microbe_Gaussian_Simi_1.xlsx and microbe_Gaussian_Simi_2.xlsx 
+- disease-metabolite details: disease-metabolite.xlsx
+- disease-metabolite associations: association_matrix.csv
+- disease similarity matirix: diease_simi_network.csv
+- metabolite similarity matirix: metabolite_simi_ntework.csv
+- disease initial feature: MeSHHeading2vec.csv
+- metabolite initial feature: metabolite_mol2vec.csv
 ```
 
 ## 🛠️ Model options
