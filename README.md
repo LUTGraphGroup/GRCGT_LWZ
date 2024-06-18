@@ -7,11 +7,16 @@ RGCGT: A high-order feature learning framework for predicting disease-metabolite
 
 ## 🛠️ Dependecies
 ```
-- Python == 3.9
-- pytorch == 1.12.1
-- dgl == 1.1.1
-- numpy == 1.22.4+mkl
-- pandas == 1.4.4
+- conda=24.4.0
+- Python == 3.12
+- pytorch == 2.3.0+cu121
+- torch_geometric==2.5.3
+- torch_sparse=0.6.18
+- numpy == 1.26.4
+- pandas == 2.2.2
+- scikit-learn==1.5.0
+- scipy==1.13.1
+- matplotlib==3.9.0
 ```
 
 ## 🗓️ Dataset
