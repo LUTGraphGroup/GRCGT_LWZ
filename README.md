@@ -5,6 +5,7 @@ Predicting disease-metabolite associations based on the metapath aggregation of 
 
 ## 🏠 Overview
 ![image](https://github.com/Lwz1225/MAHN/assets/127914409/ddd7ad49-8a8c-4f67-8287-d5900db5f0c7)
+![image](https://github.com/LUTGraphGroup/GRCGT_LWZ/assets/109469869/b43b178f-1c98-49a9-a3d1-93dbd97b7da6)
 
 
 ## 🛠️ Dependecies
