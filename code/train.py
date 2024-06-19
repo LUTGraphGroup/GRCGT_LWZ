@@ -101,7 +101,7 @@ for k in range(k_folds):
     # Node embedding for t-hop neighbor aggregation
     processed_features = re_features(or_adj, features, args.hops).to(device)  # return (N, hops+1, d)
 
-    model = TransformerModel(hops=args.hops,
+    model = RGCGT(hops=args.hops,
                              output_dim=args.node_output,
                              input_dim=features.shape[1],
                              pe_dim=args.pe_dim,
