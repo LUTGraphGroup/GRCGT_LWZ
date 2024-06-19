@@ -52,10 +52,9 @@ RGCGT: A high-order feature learning framework for predicting disease-metabolite
 ```
 
 ###  training parameters
-```
-![model_parameter](https://github.com/LUTGraphGroup/GRCGT_LWZ/assets/109469869/90cf3c4d-73f3-415e-9692-85661f2854d5)
 
-```
+![model_parameter](https://github.com/LUTGraphGroup/GRCGT_LWZ/assets/109469869/9add4d20-6dad-4b94-82e2-c91e0d75bc0e)
+
 
 ## 🎯 How to run?
 ```
