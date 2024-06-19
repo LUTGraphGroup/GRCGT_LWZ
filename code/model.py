@@ -1,4 +1,3 @@
-from torch_geometric.nn import GCN2Conv
 from Rgcgt.layers import *
 
 
