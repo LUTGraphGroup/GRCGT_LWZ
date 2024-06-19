@@ -42,17 +42,18 @@ RGCGT: A high-order feature learning framework for predicting disease-metabolite
 ```
 
 ## 🛠️ Model options
+###  training parameters
 ```
---epochs           int     Number of training epochs.                 Default is 1000.
---attn_size        int     Dimension of attention.                    Default is 64.
---attn_heads       int     Number of attention heads.                 Default is 6.
---out_dim          int     Output dimension after feature extraction  Default is 64.
---sampling number  int     enhanced GraphSAGE sampling number         Default is 50.
---dropout          float   Dropout rate                               Default is 0.2.
---slope            float   Slope                                      Default is 0.2.
+--seed             int     Random seed                                Default is 0.
+--epochs           int     Number of training epochs.                 Default is 500.
+--weight_decay     float   Weight decay                               Default is 5e-4.
+--dropout          float   Dropout rate                               Default is 0.1.
 --lr               float   Learning rate                              Default is 0.001.
---wd               float   weight decay                               Default is 5e-3.
+```
 
+###  training parameters
+```
+![image](https://github.com/LUTGraphGroup/GRCGT_LWZ/assets/109469869/00406aa7-39c1-470a-992b-b858acc5c98c)
 ```
 
 ## 🎯 How to run?
