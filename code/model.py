@@ -2,7 +2,7 @@ from torch_geometric.nn import GCN2Conv
 from Rgcgt.layers import *
 
 
-class TransformerModel(nn.Module):
+class RGCGT(nn.Module):
     def __init__(
             self,
             hops,
