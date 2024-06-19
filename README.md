@@ -58,11 +58,11 @@ RGCGT: A high-order feature learning framework for predicting disease-metabolite
 
 ## 🎯 How to run?
 ```
-1. The data folder stores various associations and similarities. 
-2. The My_code folder for implementing the MAHN model, which specifically includes:
-  (1) main.py is used to start the MAHN model and set up parameters.
-  (2) train.py is used to implement training and validation, loss function definition, optimizer selection and parameter update.
-  (3) model.py is used to build the overall structure of the MAHN model, including different meta-path encoding and bilinear decoder.
-  (4) layers.py mainly stores some customized network layers, including multi-head attention layer, semantic level and node level attention layer, etc.
-  (5) utils.py mainly realizes data loading, semantic network construction, node sampling and evaluation index calculation, etc.
+1. The data1 and data2 folders store the association networks, disease and metabolite networks, and initial characterization data for datasets 1 and 2, respectively.
+2. The code folder for implementing the RGCGT model, which specifically includes:
+  (1) train.py is used to start the RGCGT model and set up parameters, implement training and validation, loss function definition, optimizer selection and parameter update.
+  (2) model.py is used to build the overall structure of the RGCGT model, including residual graph convolution (RGC), graph transformer (GT) with multi-hop neighbor aggregation and decoder.
+  (3) layers.py mainly stores some customized network layers, including multi-head self-attention layer and feed-forward network, etc.
+  (4) utils.py mainly realizes data loading, evaluation index calculation and plot, etc.
+3. The results folder stores detailed experimental results on datasets 1 and 2 using jupyter
 ```
