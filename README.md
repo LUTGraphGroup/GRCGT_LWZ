@@ -64,5 +64,5 @@ RGCGT: A high-order feature learning framework for predicting disease-metabolite
   (2) model.py is used to build the overall structure of the RGCGT model, including residual graph convolution (RGC), graph transformer (GT) with multi-hop neighbor aggregation and decoder.
   (3) layers.py mainly stores some customized network layers, including multi-head self-attention layer and feed-forward network, etc.
   (4) utils.py mainly realizes data loading, evaluation index calculation and plot, etc.
-3. The results folder stores detailed experimental results on datasets 1 and 2 using jupyter
+3. The results folder stores detailed experimental results on datasets 1 and 2 using jupyter notebook.
 ```
