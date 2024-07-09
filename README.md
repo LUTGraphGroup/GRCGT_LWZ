@@ -51,7 +51,7 @@ RGCGT: A high-order feature learning framework for predicting disease-metabolite
 --lr               float   Learning rate                              Default is 0.001.
 ```
 
-###  training parameters
+###  model parameters
 
 ![model_parameter](https://github.com/LUTGraphGroup/GRCGT_LWZ/assets/109469869/9add4d20-6dad-4b94-82e2-c91e0d75bc0e)
 
