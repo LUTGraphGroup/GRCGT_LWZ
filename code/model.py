@@ -37,25 +37,25 @@ class RGCGT(nn.Module):
         self.num_meta = num_meta
         self.GCNII_layers = GCNII_layers
         self.convs = nn.ModuleList()
+
+        # Residual Graph Convolution (RGC)
         for i in range(self.GCNII_layers):
             conv = GCN2Conv(channels=int(self.hidden_dim/2), alpha=0.1, theta=1, layer=i + 1)
             self.convs.append(conv)
 
+        # Graph Transformer (GT)
         self.att_embeddings_nope = nn.Linear(self.input_dim, self.hidden_dim)
         encoders = [
             EncoderLayer(self.hidden_dim, self.ffn_dim, self.dropout_rate, self.num_heads)
             for _ in range(self.graphformer_layers)]
         self.layers = nn.ModuleList(encoders)
         self.final_ln = nn.LayerNorm(hidden_dim)
-
         self.out_proj = nn.Linear(self.hidden_dim, int(self.hidden_dim / 2))
-
         self.attn_layer = nn.Linear(2 * self.hidden_dim, 1)
-
         self.Linear1 = nn.Linear(int(self.hidden_dim / 2), self.output_dim)
-
         self.scaling = nn.Parameter(torch.ones(1) * 0.5)
 
+        # Multi-layer perceptron (MLP)
         self.mlp = nn.Sequential(
             nn.Linear(192, 256),
             nn.ReLU(),
@@ -66,18 +66,20 @@ class RGCGT(nn.Module):
         self.apply(lambda module: init_params(module, n_layers=self.graphformer_layers))
 
     def forward(self, processed_features, dis_data, meta_data):
+        # Residual graph convolution for disease similarity network coding
         x_0_dis = dis_data.x
         x_dis = x_0_dis
         for conv in self.convs:
             x_dis = conv(x_dis, x_0_dis, dis_data.edge_index)
-
+        # Residual graph convolution for metabolite similarity network coding
         x_0_meta = meta_data.x
         x_meta = x_0_meta
         for conv in self.convs:
             x_meta = conv(x_meta, x_0_meta, meta_data.edge_index)
         x_GCNII = torch.cat((x_dis, x_meta), dim=0)
 
-        tensor = self.att_embeddings_nope(processed_features)  # Equation（18）
+        tensor = self.att_embeddings_nope(processed_features)  # Equation (21) in the paper
+        
         # transformer encoder
         for enc_layer in self.layers:
             tensor = enc_layer(tensor)
@@ -91,10 +93,11 @@ class RGCGT(nn.Module):
         neighbor_tensor = neighbor_tensor * layer_atten
         neighbor_tensor = torch.sum(neighbor_tensor, dim=1, keepdim=True)
         x_former = (node_tensor + neighbor_tensor).squeeze()
-
-        output = torch.cat((x_GCNII, x_former), dim=1)
-        embedings = self.mlp(output)
-        x1 = self.decoder(embedings)
+        
+        # Equation (28) and (29) in the paper
+        output = torch.cat((x_GCNII, x_former), dim=1)  
+        embedings = self.mlp(output)  
+        x1 = self.decoder(embedings)  # Equation (30) in the paper
         return x1
 
 
