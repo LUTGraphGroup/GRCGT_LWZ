@@ -17,7 +17,7 @@ RGCGT: A high-order feature learning framework for predicting disease-metabolite
 - scikit-learn == 1.5.0
 - scipy == 1.13.1
 - matplotlib == 3.9.0
-- GPU == RTX 2080 Ti(11GB) * 1
+- GPU == NVIDIA RTX 4090D (24G) GPUs * 1
 - CPU == 12 vCPU Intel(R) Xeon(R) Platinum 8255C CPU @ 2.50GHz
 ```
 
