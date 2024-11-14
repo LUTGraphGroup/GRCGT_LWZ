@@ -3,7 +3,7 @@ from utils import *
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # device = torch.device('cpu')
 
-
+# accuracy, precision, recall and f1_score evaluation metrics
 def get_metrics(real_score, predict_score):
     sorted_predict_score = np.array(
         sorted(list(set(predict_score.flatten()))))
