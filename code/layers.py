@@ -12,7 +12,7 @@ from torch_geometric.nn.conv.gcn_conv import gcn_norm
 from torch_geometric.typing import Adj, OptTensor
 from utils import glorot
 
-
+# Residual Graph Convolutional Coding Layer
 class GCN2Conv(MessagePassing):
     _cached_edge_index: Optional[Tuple[Tensor, Tensor]]
     _cached_adj_t: Optional[SparseTensor]
@@ -127,7 +127,7 @@ def gelu(x):
     """
     return 0.5 * x * (1.0 + torch.erf(x / math.sqrt(2.0)))
 
-
+# Feedforward Network (FFN)
 class FeedForwardNetwork(nn.Module):
     def __init__(self, hidden_size, ffn_size, dropout_rate):
         super(FeedForwardNetwork, self).__init__()
@@ -144,7 +144,7 @@ class FeedForwardNetwork(nn.Module):
         x = self.layer2(x)
         return x
 
-
+# Multi-head Self-Attention (MSA)
 class MultiHeadAttention(nn.Module):
     def __init__(self, hidden_size, attention_dropout_rate, num_heads):
         super(MultiHeadAttention, self).__init__()
@@ -204,16 +204,16 @@ class EncoderLayer(nn.Module):
         y = self.self_attention_norm(x)  # LN
         y = self.self_attention(y, y, y, attn_bias)  # MSA
         y = self.self_attention_dropout(y)
-        x = x + y  # Equation（19）
+        x = x + y  # Equation (22)
 
         y = self.ffn_norm(x)
         y = self.ffn(y)
         y = self.ffn_dropout(y)
-        x = x + y  # Equation（20）
+        x = x + y  # Equation (23)
         return x
 
 
-class InnerProductDecoder(nn.Module): # Equation（27）
+class InnerProductDecoder(nn.Module): # Equation (30)
     """
     decoder 解码器
     """
