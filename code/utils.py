@@ -19,8 +19,8 @@ def decrease_to_max_value(x, max_value):
     x[x > max_value] = max_value
     return x
 
-
-def constructNet(association_matrix): # construct association matrix
+# construct association matrix
+def constructNet(association_matrix):
     n, m = association_matrix.shape
     drug_matrix = torch.zeros((n, n), dtype=torch.int8)
     meta_matrix = torch.zeros((m, m), dtype=torch.int8)
@@ -31,26 +31,30 @@ def constructNet(association_matrix): # construct association matrix
 
 
 def load_data(seed, n_components):
+    # Disease-metabolite association matrix
     Adj = pd.read_csv('../data1/association_matrix.csv', header=0)
     count_ones = np.count_nonzero(Adj == 1)
     print("元素为1的个数：", count_ones)
-
+    
+    # Disease similarity matrix and its network construction
     Dis_simi = pd.read_csv('../data1/diease_simi_network.csv', header=0)
-    Dis_adj = np.where(Dis_simi > 0.4, 1, 0)
+    Dis_adj = np.where(Dis_simi > 0.4, 1, 0)  # Formula (11) in the paper
     count_ones_disease = np.count_nonzero(Dis_adj)
     print("Dis_adj 中值为 1 的元素个数:", count_ones_disease)
     Dis_adj = torch.tensor(Dis_adj).to(device)
-
+    
+    # Metabolite similarity matrix and its network construction
     Meta_simi = pd.read_csv('../data1/metabolite_simi_ntework.csv', header=0)
-    Meta_adj = np.where(Meta_simi > 0.4, 1, 0)
+    Meta_adj = np.where(Meta_simi > 0.4, 1, 0) # Formula (12) in the paper
     count_ones_meta = np.count_nonzero(Meta_adj)
     print("Meta_adj 中值为 1 的元素个数:", count_ones_meta)
     Meta_adj = torch.tensor(Meta_adj).to(device)
 
+    # Initial biochemical feature of disease and metabolites
     Dis_MESH2vec = pd.read_csv('../data1/MeSHHeading2vec.csv', header=0)
     Meta_mol2vec = pd.read_csv('../data1/metabolite_mol2vec.csv', header=0)
 
-    # PCA
+    # PCA Dimensionality Reduction
     pca = PCA(n_components=n_components)
     PCA_dis_feature = pca.fit_transform(Dis_MESH2vec.values)
     PCA_metabolite_feature = pca.fit_transform(Meta_mol2vec.values)
@@ -58,7 +62,7 @@ def load_data(seed, n_components):
     Meta_feature = torch.FloatTensor(PCA_metabolite_feature).to(device)
     feature = torch.cat((Dis_feature, Meta_feature), dim=0).to(device)
 
-    # Training and validation set samples
+    # Five-fold division of positive samples
     index_matrix = np.mat(np.where(Adj == 1))
     association_nam = index_matrix.shape[1]
     random_index = index_matrix.T.tolist()
@@ -73,7 +77,7 @@ def load_data(seed, n_components):
     random_index = temp
     return Adj, Dis_adj, Meta_adj, feature, random_index, k_folds
 
-
+# laplacian_positional_encoding builds the structure matrix 
 def laplacian_positional_encoding(adj, pe_dim):
     N = torch.diag(torch.pow(torch.sum(adj, dim=1).clamp(min=1), -0.5))  # 归一化矩阵N
     L = torch.eye(adj.shape[0]).to(device) - N @ adj @ N
@@ -85,7 +89,7 @@ def laplacian_positional_encoding(adj, pe_dim):
     lap_pos_enc = (EigVec_sorted[:, 1:pe_dim + 1]).float()
     return lap_pos_enc
 
-
+# The multi-hop neighbor aggregation strategy implements formula (20) in the paper
 def re_features(adj, features, K):
     # size = (N, 1, K+1, d )
     nodes_features = torch.empty(features.shape[0], 1, K+1, features.shape[1])
@@ -94,7 +98,7 @@ def re_features(adj, features, K):
     x = features + torch.zeros_like(features)
     x = x.double()
     for i in range(K):
-        x = torch.matmul(adj, x)  # Equation (17)
+        x = torch.matmul(adj, x)  # Equation (20)
         for index in range(features.shape[0]):
             nodes_features[index, 0, i + 1, :] = x[index]
     nodes_features = nodes_features.squeeze()
@@ -141,14 +145,14 @@ def glorot(value: Any):
         for v in value.buffers() if hasattr(value, 'buffers') else []:
             glorot(v)
 
-
+# Constructing positive and negative sample labels
 def get_link_labels(pos_edge_index, neg_edge_index):
     num_links = pos_edge_index.size(1) + neg_edge_index.size(1)
     link_labels = torch.zeros(num_links, dtype=torch.float)
     link_labels[:pos_edge_index.size(1)] = 1
     return link_labels
 
-
+# plot the ROC curve for five-fold cross validation
 def plot_auc_curves(fprs, tprs, auc, directory, name):
     mean_fpr = np.linspace(0, 1, 20000)
     tpr = []
@@ -174,7 +178,7 @@ def plot_auc_curves(fprs, tprs, auc, directory, name):
     plt.show()
     plt.close()
 
-
+# plot the PR curve for five-fold cross validation
 def plot_prc_curves(precisions, recalls, prc, directory, name):
     mean_recall = np.linspace(0, 1, 20000)
     precision = []
