@@ -51,6 +51,7 @@ args, unknown = parser.parse_known_args()
 # args = parser.parse_args()
 print('args', args)
 
+# data read
 Adj, Dis_adj, Meta_adj, feature, random_index, k_folds = load_data(args.seed, args.node_input)
 
 auc_result = []
@@ -64,8 +65,9 @@ tprs = []
 precisions = []
 recalls = []
 print("seed=%d, evaluating metabolite-disease...." % args.seed)
-for k in range(k_folds):
+for k in range(k_folds):  # Five-fold cross validation
     print("------this is %dth cross validation------" % (k + 1))
+    # Validation set positive and negative samples
     Or_train = np.matrix(Adj, copy=True)
     val_pos_edge_index = np.array(random_index[k]).T
     val_pos_edge_index = torch.tensor(val_pos_edge_index, dtype=torch.long).to(device)
@@ -84,7 +86,7 @@ for k in range(k_folds):
     Or_train_matrix[tuple(np.array(random_index[k]).T)] = 0
     or_adj = constructNet(torch.tensor(Or_train_matrix)).to(device)
 
-    # Positional encoding
+    # Positional encoding constructs a structural matrix
     lpe = laplacian_positional_encoding(or_adj, args.pe_dim).to(device)  # args.pe_dim: Positional encoding dimension
     features = torch.cat((feature, lpe), dim=1)  # Equation (16)
 
@@ -135,9 +137,10 @@ for k in range(k_folds):
     best_fpr = 0
     best_recall = 0
     best_precision = 0
-    for epoch in range(args.epochs):
+    for epoch in range(args.epochs):  # 500 epochs per fold
         start = time.time()
-
+      
+        # Model Training
         model.train()
         optimizer.zero_grad()
         train_neg_edge_index = np.mat(np.where(Or_train_matrix < 1)).T.tolist()
@@ -155,7 +158,8 @@ for k in range(k_folds):
         loss_train.backward(retain_graph=True)
         optimizer.step()
         lr_scheduler.step()
-
+      
+        # Model Evaluation
         model.eval()
         with torch.no_grad():
             score_train_cpu = np.squeeze(trian_scores.detach().cpu().numpy())
@@ -176,7 +180,7 @@ for k in range(k_folds):
                   'F1: %.4f' % metric_tmp[3],
                   'Train AUC: %.4f' % train_auc, 'Val AUC: %.4f' % val_auc, 'Val PRC: %.4f' % val_prc,
                   'Time: %.2f' % (end - start))
-            if metric_tmp[0] > best_acc and val_auc > best_auc and val_prc > best_prc:
+            if metric_tmp[0] > best_acc and val_auc > best_auc and val_prc > best_prc:  # Save the optimal index for each fold
                 metric_tmp_best = metric_tmp
                 best_auc = val_auc
                 best_prc = val_prc
